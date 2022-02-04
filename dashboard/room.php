@@ -150,7 +150,10 @@
                                     </div>
                                     <div class="col-6">
                                         <label>Duration</label> &nbsp;
-                                        <input type="text" class="form-control duration_input" id="roomDurationEdit" name="room_stay_duration" value='<?php echo $data['Duration']?>' data-placeholder="/months" readonly/> 
+                                        <div class="placeholder_box">
+                                            <input type="text" class="form-control" id="roomDurationEdit" name="room_stay_duration" value='<?php echo $data['Duration']?>' data-placeholder="/months" readonly/> 
+                                            <div class="placeholder">/month</div>
+                                        </div>
                                     </div>
                                     <div class="col-6">
                                         <label>Total</label> &nbsp;

@@ -65,23 +65,25 @@
 .total_input, .duration_input{
     cursor: pointer;
 }
-.duration_input{
+.placeholder_box{
     position: relative;
-    display: inline-block;
 }
-.duration_input::after{
+.placeholder{
     position: absolute;
-    right: 5px;
-    top: 1px;
-    content: "/mt";
-    pointer-events: none;
-    opacity: 0.6;
+    top: 0;
+    right: 0;
+    height: 100%;
+    color: black;
+    width: 60px;
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-footer{
     float: end !important;
 }
-
 .modal-footer .btn{
     width: 100px;
 }

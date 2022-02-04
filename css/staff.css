@@ -1,0 +1,28 @@
+.staffNav{
+    border-bottom: 1px solid grey;
+    height: auto;
+}
+.input-group-text{
+    padding-right: 6px;
+    text-align: center;
+}
+.staff_page{
+    height: 520px;
+    /* overflow-y: scroll; */
+}
+.staff_table{
+    list-style: none;
+    padding: 0;
+}
+.staff_table li{
+    font-size: 20px;
+    background: rgb(247, 244, 244);
+}
+.staff_table li:nth-child(even){
+    background: rgb(226, 224, 224);
+}
+.staff_list{
+    text-align: center;
+    padding: 5px 0;
+    border: 1px solid grey
+}
