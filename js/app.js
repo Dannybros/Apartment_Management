@@ -56,7 +56,7 @@ function getRoomTypePrice(roomId, id){
         dataType:"JSON",
         success: function(res){
             let val = res['Room_Type_Price'];
-            price.value = val+"$ / 1yr";
+            price.value = val+"$ / month";
         }   
     })
 
@@ -77,7 +77,7 @@ function fetchFreeRoom(room_id){
             success: function(res){
                 roomNames.innerHTML="<option selected disabled> Select the Room Number</option>";
 
-                room_price.value=res[0].price;
+                room_price.value=res[0].price + " $";
                 
                 total.value=(parseInt(duration.value) * res[0].price);
                 
@@ -128,11 +128,23 @@ function getDuration(d1, d2, price, duration, total){
 
     if(d1.value !=="" && d2.value !==""){
         let totalStay = getMonthBetween(d1.value, d2.value);
-        duration.value= totalStay;
-        total.value = (totalStay * parseInt(price.value));
+        duration.value= totalStay + " months";
+        total.value = (totalStay * parseInt(price.value)) + " $";
     }
 }
 
-function getRoomDurationEdit(){
-    console.log(hello);
+function cleanRoom(id, price){
+    console.log(id);
+    $.ajax({
+        url:`includes/dbCleanRoom.php?id=${id}`,
+        type:"GET",
+        success: function(res){
+            if(res==='failed'){
+                alert("SQL failed. Please try again")
+            }
+            if(res==='success'){
+                window.location.replace('index.php?room&success=checkout')
+            }
+        }
+    })
 }

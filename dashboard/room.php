@@ -24,14 +24,19 @@
                         Edit change failed. Please try again!
                     </div>
                 ';
-                
             }
             if(isset($_GET['success'])){
-                echo'
-                    <div class="alert alert-success mt-2" role="alert">
-                       <b> Room has edited successfully!</b>
+                $msg = "adf";
+                if($_GET['success'] == "checkout"){
+                    $msg="Room Check Out successfully!";
+                }else{
+                    $msg="Room has edited successfully!";
+                }
+                echo"
+                    <div class='alert alert-success mt-2' role='alert'>
+                       <b> $msg </b>
                     </div>
-                ';
+                ";
                 
             }
         ?>
@@ -85,7 +90,7 @@
                             <main class="modal-body row" style="height:100%; row-gap:20px ">
                                 <div class="col-6">
                                     <label>Room ID</label>
-                                    <input type="text" class="form-control" name="room__id" readonly value="<?php echo $roomModals['Room_Id']?>"/>
+                                    <input type="text" class="form-control" id="edit_room__id" name="room__id" readonly value="<?php echo $roomModals['Room_Id']?>"/>
                                 </div>
                                 <div class="col-6">
                                     <label>Room Name</label>
@@ -118,10 +123,15 @@
                                 </div>
                                 <?php 
                                     if($roomModals['Status']=="Booked"){
-                                        $name = $roomModals['Room_Name'];
-                                        $query= "SELECT * FROM rooms NATURAL JOIN booking WHERE Room_Name='$name'";
+                                        $RoomName = $roomModals['Room_Name'];
+                                        $query= "SELECT * FROM  booking NATURAL JOIN customer WHERE Room_Name='$RoomName'"; //SELECT * FROM rooms NATURAL JOIN booking WHERE Room_Name='$name'
                                         $result = mysqli_query($conn, $query);
                                         $data = mysqli_fetch_array($result);
+                                        $total=$data['Total'];
+                                        $d1= $data['Check_In'];
+                                        $d2 = $data['Check_Out'];
+                                        $room_id = $roomModals['Room_Id'];
+                                        $room_price = $roomModals['Room_Type_Price'];
                                 ?>
                                     <div class="col-6">
                                         <label>Customer Name: </label> &nbsp;
@@ -138,33 +148,35 @@
                                     </div>
                                     <div class="col-6">
                                         <label>Customer ID Card: </label> &nbsp;
-                                        <input type="text" class="form-control" name="customer_ID" value="<?php echo $data['Customer_IdCard']?>"/>
+                                        <input type="text" class="form-control" name="customer_ID" value="<?php echo $data['Customer_ID_Card']?>"/>
                                     </div>
                                     <div class="col-6">
                                         <label>Check In</label> &nbsp;
-                                        <input type="month" class="form-control" id="room_check_in" name="room_check_in" value="<?php echo $data['Check_In']?>" onchange="getDuration(room_check_in, room_check_out, room_price<?php echo $roomModals['Room_Id']?>, roomDurationEdit, roomCheckTotal)"/>
+                                        <input type="month" class="form-control" id="room_check_in" name="room_check_in" value="<?php echo $d1?>" onchange="getDuration(room_check_in, room_check_out, room_price<?php echo $roomModals['Room_Id']?>, roomDurationEdit, roomCheckTotal)"/>
                                     </div>
                                     <div class="col-6">
                                         <label>Check Out</label> &nbsp;
-                                        <input type="month" class="form-control" id="room_check_out" name="room_check_out" value="<?php echo $data['Check_Out']?>" onchange="getDuration(room_check_in, room_check_out, room_price<?php echo $roomModals['Room_Id']?>, roomDurationEdit, roomCheckTotal)"/>
+                                        <input type="month" class="form-control" id="room_check_out" name="room_check_out" value="<?php echo $d2?>" onchange="getDuration(room_check_in, room_check_out, room_price<?php echo $roomModals['Room_Id']?>, roomDurationEdit, roomCheckTotal)"/>
                                     </div>
                                     <div class="col-6">
                                         <label>Duration</label> &nbsp;
-                                        <div class="placeholder_box">
-                                            <input type="text" class="form-control" id="roomDurationEdit" name="room_stay_duration" value='<?php echo $data['Duration']?>' data-placeholder="/months" readonly/> 
-                                            <div class="placeholder">/month</div>
-                                        </div>
+                                        <input type="text" class="form-control" id="roomDurationEdit" name="room_stay_duration" value='<?php echo $data['Duration']?> months' readonly/>  
                                     </div>
                                     <div class="col-6">
                                         <label>Total</label> &nbsp;
-                                        <input type="text" class="form-control total_input" id="roomCheckTotal" name="room_price_total" value='<?php echo $data['Total']?>' readonly/>
+                                        <input type="text" class="form-control total_input" id="roomCheckTotal" name="room_price_total" value='<?php echo $total?> $' readonly/>
                                     </div>
                                 <?php }?>
                             </main>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Edit</button>
-                                <button type="reset" class="btn btn-danger">Reset</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="reset" class="btn btn-danger">Default</button>
+                                <button type="submit" class="btn btn-success">Edit</button>
+                                <?php
+                                    if($roomModals['Status']=="Booked"){
+                                ?>
+                                    <button type="button" class="btn btn-warning" onclick='cleanRoom(<?php echo "$room_id, $room_price" ?>)'>Check Out</button>
+                                <?php } ?>
                             </div>
                         </form>
                     </div>

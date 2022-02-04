@@ -85,11 +85,11 @@
                             class="booking_duration"
                             type="text" 
                             name="duration" 
-                            style="width:25px" 
+                            style="width:100px" 
                             readonly 
-                            value="0" 
+                            value="0 month" 
                             id="booking_duration"
-                        > Month(s)
+                        >
                     </b>
                 </h5>
                 <h5 class="ml-3">
@@ -99,10 +99,10 @@
                             name="price" 
                             size='3' 
                             readonly 
-                            value="0" 
+                            value="0 $" 
                             class="booking_room_price"
                             id="booking_room_price"
-                        > /$
+                        >
                     </b>
                 </h5>
                 <h5 class="ml-3">
@@ -111,11 +111,11 @@
                             type="text" 
                             name="total" 
                             size='3' 
-                            value="0" 
+                            value="0 $" 
                             class="booking_total"
                             id="booking_total"
                             readonly
-                        > /$
+                        >
                     </b>
                 </h5>
             </main>

@@ -32,7 +32,7 @@ if(isset($_POST['room_modal_type'])){
     $duration = $_POST['room_stay_duration'];
     $total = $_POST['room_price_total'];
 
-    $sql="UPDATE `booking` SET `Customer_Name`='$name',`Customer_Contact`='$contact',`Customer_Email`='$email',`Customer_IdCard`='$idCard',`Duration`='$duration',`Check_In`='$checkIn',`Check_Out`='$checkOut',`Total`='$total' WHERE `Room_Name`='$room_name'";
+    $sql="UPDATE `customer` NATURAL JOIN booking SET `Customer_Name`='$name',`Customer_Contact`='$contact',`Customer_Email`='$email',`Customer_ID_Card`='$idCard',`Duration`='$duration',`Check_In`='$checkIn',`Check_Out`='$checkOut',`Total`='$total' WHERE `Room_Name`='$room_name'";
 
     $result = mysqli_query($conn, $sql);
     if ($result) {
