@@ -1,0 +1,15 @@
+.reservation_title, .customer_info {
+    border-bottom: 1px solid grey;
+}
+.booking__panel{
+    height: 100% !important;
+}
+.booking_duration, .booking_total, .booking_room_price{
+    border: none;
+    text-align: center;
+    font-weight: bold;
+    cursor:default;
+}
+.booking_duration:focus, .booking_total:focus, .booking_room_price:focus{
+    outline: none !important;
+}
