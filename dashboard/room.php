@@ -169,15 +169,20 @@
                                     </div>
                                 <?php }?>
                             </main>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="reset" class="btn btn-danger">Default</button>
-                                <button type="submit" class="btn btn-success">Edit</button>
-                                <?php
-                                    if($roomModals['Status']=="Booked"){
-                                ?>
-                                    <button type="button" class="btn btn-warning" onclick='cleanRoom(<?php echo "`$room_id`,`$RoomName`,`$room_price`, `$d1`, `$d2`" ?>)'>Check Out</button>
-                                <?php } ?>
+                            <div class="modal-footer d-flex justify-content-between">
+                                <div>
+                                    <button type="submit" class="btn btn-success">Edit</button>
+                                    
+                                    <button type="reset" class="btn btn-danger">Default</button>
+                                </div>
+                                <div>
+                                    <?php
+                                        if($roomModals['Status']=="Booked"){
+                                    ?>
+                                        <button type="button" class="btn btn-warning" onclick='cleanRoom(<?php echo "`$room_id`,`$RoomName`,`$room_price`, `$d1`, `$d2`" ?>)'>Check Out</button>
+                                    <?php } ?>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </form>
                     </div>

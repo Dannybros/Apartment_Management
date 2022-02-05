@@ -21,7 +21,7 @@
         include_once "dashboard/staff.php";
         
     }else if(isset($_GET['edit'])){
-        include_once "dashboard/edit.php";
+        include_once "dashboard/setting.php";
         
     }else{
         include_once "dashboard/room.php";

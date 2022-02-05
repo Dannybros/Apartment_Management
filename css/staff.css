@@ -7,12 +7,12 @@
     text-align: center;
 }
 .staff_page{
-    height: 520px;
-    /* overflow-y: scroll; */
+    /* height: 480px; */
 }
 .staff_table{
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 .staff_table li{
     font-size: 20px;
@@ -22,7 +22,21 @@
     background: rgb(226, 224, 224);
 }
 .staff_list{
-    text-align: center;
-    padding: 5px 0;
-    border: 1px solid grey
+    padding: 10px 5px;
+    font-size: 16px;
+    border-right: 1px solid rgb(202, 202, 202);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn_staff_shift{
+    border: none;
+    background: rgb(230, 175, 26);
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.staff_icon{
+    cursor: pointer;
+    margin-right: 0 !important;
 }

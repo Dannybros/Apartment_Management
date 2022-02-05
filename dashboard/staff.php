@@ -1,5 +1,5 @@
     <div class="col-sm-9 main_box" style="box-sizing: border-box;">
-       <div class="container" style="height: 100%;">
+       <div class="bg-white mx-3 my-4 p-3" style="margin-top: 20px;">
            <div class="staffNav p-3 d-flex justify-content-between">
                <button class="btn btn-primary py-2" data-toggle="modal" data-target="#AddNewStaff">Add New Employee</button>
                <form class="form-inline">
@@ -14,21 +14,31 @@
                 </form>
            </div>
            
-           <div class="staff_page my-4">
+           <div class="staff_page mt-4 mb-2">
                <ul class="staff_table">
-                   <li class="d-flex justify-content-between">
-                       <span class="col-3 staff_list">Name</span>
-                       <span class="col-2 staff_list">Occupation</span>
-                       <span class="col-2 staff_list">Contact</span>
-                       <span class="col-2 staff_list">Salary</span>
-                       <span class="col-3 staff_list">Edit</span>
+                   <li class="d-flex justify-content-between" style="height:60px">
+                       <span class="col-1 staff_list"><b>Staff No.</b></span>
+                       <span class="col-2 staff_list"><b>Staff Name</b></span>
+                       <span class="col-2 staff_list"><b>Work</b></span>
+                       <span class="col-3 staff_list"><b>Shift</b></span>
+                       <span class="col-1 staff_list"><b>Salary</b></span>
+                       <span class="col-1 staff_list"><b>Swap Shift</b></span>
+                       <span class="col-2 staff_list"><b>Action</b></span>
                    </li>
                    <li class="d-flex justify-content-between">
-                       <span class="col-3 staff_list">Name</span>
-                       <span class="col-2 staff_list">Occupation</span>
-                       <span class="col-2 staff_list">Contact</span>
-                       <span class="col-2 staff_list">Salary</span>
-                       <span class="col-3 staff_list">Edit</span>
+                       <span class="col-1 staff_list">Staff No.</span>
+                       <span class="col-2 staff_list">Cleta Landon</span>
+                       <span class="col-2 staff_list">Front Desk Receptionist</span>
+                       <span class="col-3 staff_list">Evening 11:00 PM - 4:00 AM</span>
+                       <span class="col-1 staff_list">Salary</span>
+                       <span class="col-1 staff_list">
+                           <button class="btn_staff_shift">Change</button>
+                       </span>
+                       <span class="col-2 staff_list justify-content-around">
+                            <i class="fas fa-pen btn btn-primary staff_icon"></i>
+                            <i class="fas fa-trash btn btn-danger staff_icon"></i>
+                            <i class="fas fa-eye btn btn-success staff_icon"></i>
+                       </span>
                    </li>
                </ul>
            </div>

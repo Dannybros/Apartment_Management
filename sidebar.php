@@ -32,9 +32,9 @@
                 </a>
             </li>
             <li>
-                <a href="index.php?edit" class="menu__list <?php if (isset($_GET['edit'])) echo 'active_list'?>">
+                <a href="index.php?setting" class="menu__list <?php if (isset($_GET['setting'])) echo 'active_list'?>">
                     <em class="fas fa-sliders-h">&nbsp;</em>
-                    Manage Rooms
+                    Setting
                 </a>
             </li>
             
