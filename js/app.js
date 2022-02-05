@@ -96,7 +96,7 @@ function getMonthBetween(d1, d2){
     var year = (d2.split('-')[0] - d1.split('-')[0]) * 12;
     var month = d2.split('-')[1] - d1.split('-')[1];
 
-    return (year+month);
+    return (year+month+1);
 }
 
 function getNextMonth(d){
@@ -120,7 +120,7 @@ function getNextMonth(d){
     return new_year +"-"+ new_month;
 }
 
-function getDuration(d1, d2, price, duration, total){
+function getDuration(d1, d2, price, duration){
     if(d1.value!==""){
         d2.min=getNextMonth(d1.value);
         d2.focus();
@@ -133,18 +133,46 @@ function getDuration(d1, d2, price, duration, total){
     }
 }
 
-function cleanRoom(id, price){
-    console.log(id);
-    $.ajax({
-        url:`includes/dbCleanRoom.php?id=${id}`,
-        type:"GET",
-        success: function(res){
-            if(res==='failed'){
-                alert("SQL failed. Please try again")
-            }
-            if(res==='success'){
-                window.location.replace('index.php?room&success=checkout')
+function cleanRoom(id, room, price, d1, d2){
+
+    const d = new Date();
+    const currentDate = `${d.getFullYear()}-${d.getMonth()+1}`;
+    const dateDiff = getMonthBetween(currentDate, d2);
+
+    const confirmCheckout= confirm(`You still have ${dateDiff} months left to stay. Do you will wish to check out?`);
+    if(confirmCheckout){
+        let dataOption={};
+        if(dateDiff>0){
+            const duration = getMonthBetween(d1, currentDate);
+            const total = price * duration;
+            dataOption={
+                id:id,
+                room:room,
+                d2:currentDate,
+                duration:duration,
+                total:total,
+                checkout:'earlier'
+            };
+        }else{
+            dataOption = {
+                id:id,
+                checkout:'onTime'
             }
         }
-    })
+
+        $.ajax({
+            url:`includes/dbCheckout.php`,
+            type:"GET",
+            data:dataOption,
+            success: function(res){
+                if(res==='failed'){
+                    alert("SQL failed. Please try again")
+                }
+                if(res==='success'){
+                    window.location.replace('index.php?room&success=checkout')
+                }
+            }
+        })
+    }
+
 }

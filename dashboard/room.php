@@ -86,7 +86,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form method="post" action="includes/dbEditRoom.php">
+                        <form method="post" action="includes/dbEditRoom_Customer.php">
                             <main class="modal-body row" style="height:100%; row-gap:20px ">
                                 <div class="col-6">
                                     <label>Room ID</label>
@@ -127,6 +127,7 @@
                                         $query= "SELECT * FROM  booking NATURAL JOIN customer WHERE Room_Name='$RoomName'"; //SELECT * FROM rooms NATURAL JOIN booking WHERE Room_Name='$name'
                                         $result = mysqli_query($conn, $query);
                                         $data = mysqli_fetch_array($result);
+
                                         $total=$data['Total'];
                                         $d1= $data['Check_In'];
                                         $d2 = $data['Check_Out'];
@@ -175,7 +176,7 @@
                                 <?php
                                     if($roomModals['Status']=="Booked"){
                                 ?>
-                                    <button type="button" class="btn btn-warning" onclick='cleanRoom(<?php echo "$room_id, $room_price" ?>)'>Check Out</button>
+                                    <button type="button" class="btn btn-warning" onclick='cleanRoom(<?php echo "`$room_id`,`$RoomName`,`$room_price`, `$d1`, `$d2`" ?>)'>Check Out</button>
                                 <?php } ?>
                             </div>
                         </form>
