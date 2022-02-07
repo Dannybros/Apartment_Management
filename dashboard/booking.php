@@ -44,7 +44,7 @@
                         <select 
                             class="form-control" 
                             id="availableRoomName" 
-                            name="roomName" 
+                            name="available_room_id" 
                             data-error="Select Room Type" 
                             required
                         >

@@ -3,7 +3,7 @@ include_once "dbConnect.php";
 session_start();
 
     //info for booking
-    $roomName = $_POST['roomName'];
+    $room_id = $_POST['available_room_id'];
     $checkInDate = $_POST['checkInDate'];
     $checkOutDate = $_POST['checkOutDate'];
     $duration = $_POST['duration'];
@@ -18,9 +18,9 @@ session_start();
 
     insertCustomer($conn, $customerFName, $customerLName, $customerContact, $customerEmail, $customerIdCard);
     
-    insertBooking($conn, $roomName, $customerIdCard, $checkInDate, $checkOutDate, $duration, $total);
+    insertBooking($conn, $room_id, $customerIdCard, $checkInDate, $checkOutDate, $duration, $total);
 
-    updateRoomStatus($conn, $roomName);
+    updateRoomStatus($conn, $room_id);
 
     function insertCustomer($conn, $fname, $lname, $contact, $email, $idCard){
         $sql = "INSERT INTO `customer`(`Customer_Name`, `Customer_Contact`, `Customer_Email`, `Customer_ID_Card`) VALUES ('$fname $lname', '$contact', '$email', '$idCard')";
@@ -34,8 +34,9 @@ session_start();
             }
     }
 
-    function insertBooking($conn, $roomName, $customerIdCard, $d1, $d2, $duration, $total){
-        $sql="INSERT INTO `booking`(`Customer_ID_Card`, `Room_Name`, `Duration`, `Check_In`, `Check_Out`, `Total`) VALUES ('$customerIdCard', '$roomName', '$duration', '$d1', '$d2', '$total')";
+    function insertBooking($conn, $room_id, $customerIdCard, $d1, $d2, $duration, $total){
+        $c_id = getCustomerID($conn, $customerIdCard);
+        $sql="INSERT INTO `booking`(`Customer_ID`, `Room_Id`, `Duration`, `Check_In`, `Check_Out`, `Total`) VALUES ('$c_id', '$room_id', '$duration', '$d1', '$d2', '$total')";
 
         $result = mysqli_query($conn, $sql);
         if($result){
@@ -45,9 +46,17 @@ session_start();
             exit();
          }
     }
+    
+    function getCustomerID($conn, $customerIdCard){
+        $sql = "SELECT `Customer_ID` FROM `customer` WHERE `Customer_ID_Card`='$customerIdCard'";
 
-    function updateRoomStatus($conn, $room){
-        $sql ="UPDATE `rooms` SET `Status`='Booked' WHERE `Room_Name`='$room'";
+        $result = mysqli_query($conn, $sql);
+        $data = mysqli_fetch_array($result);
+        return $data['Customer_ID'];
+    }
+
+    function updateRoomStatus($conn, $room_id){
+        $sql ="UPDATE `rooms` SET `Status`='Booked' WHERE `Room_Id`='$room_id'";
         $result = mysqli_query($conn, $sql);
 
         if($result){
@@ -58,4 +67,5 @@ session_start();
             exit();
         }
     }
+    
 ?>

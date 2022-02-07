@@ -83,7 +83,7 @@ function fetchFreeRoom(room_id){
                 
                 for(var i =0; i<res.length; i++){
                     var display =`
-                        <option value='${res[i].name}'>${res[i].name}</option>
+                        <option value='${res[i].id}'>${res[i].name}</option>
                     `;
                     roomNames.innerHTML+=display;
                 }
