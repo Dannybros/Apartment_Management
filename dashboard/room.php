@@ -1,4 +1,5 @@
     <div class="col-sm-9 main_box">
+        <!-- nav searchbar -->
         <div class="d-flex justify-content-between align-items-center room_search_bar">
             <select name="floor" id="TypeSelector" class="floorSelector" onchange="showRooms(this.value)">
                 <option value="all" selected="select">All</option>
@@ -17,6 +18,8 @@
                 <input type="text" id="roomSearchBar" class="form-control" placeholder="Search" value="" onkeyup="searchRoom(this)"/>
             </div>
         </div> 
+
+        <!-- success & error message dialog -->
         <?php
             if(isset($_GET['error'])){
                 echo'
@@ -26,9 +29,11 @@
                 ';
             }
             if(isset($_GET['success'])){
-                $msg = "adf";
+                $msg = "";
                 if($_GET['success'] == "checkout"){
                     $msg="Room Check Out successfully!";
+                }else if($_GET['success'] == "customerInfo"){
+                    $msg="Customer Info has edited successfully!";
                 }else{
                     $msg="Room has edited successfully!";
                 }
@@ -40,12 +45,14 @@
                 
             }
         ?>
+
+        <!-- display every room info -->
         <div class="display__room row" id="display__room">
             <?php
                 $room_query = "SELECT * FROM `rooms` NATURAL JOIN `room_type`";
                 $room_result = mysqli_query($conn, $room_query);
                 while ($rooms = mysqli_fetch_assoc($room_result)) {?>
-                    <div class="room__one" data-toggle="modal" data-target="#roomModal<?php echo $rooms['Room_Id'] ?>">
+                    <div class="room__one" >
                         <div class="room_box"
                             <?php
                             if($rooms['Status']=="Free"){
@@ -57,10 +64,19 @@
                         >
                             <?php echo $rooms['Room_Name'] ?>
                         </div>
-                        <div style="background:white; cursor:pointer; user-select:none"> 
-                            <?php echo $rooms['Room_Type_Name'] ?> Room
-                            &nbsp; 
-                            (<?php echo $rooms['Status'] ?>)
+                        <div style="background:white; cursor:pointer; user-select:none; border-bottom:1px solid grey"> 
+                            <b>
+                                <?php echo $rooms['Room_Type_Name'] ?> Room
+                                &nbsp; 
+                                (<?php echo $rooms['Status'] ?>)
+                            </b>
+                        </div>
+                        <div class="bg-white p-2 d-flex justify-content-around">
+                            <i class="fas fa-pen btn btn-success staff_icon" data-toggle="modal" data-target="#roomModal<?php echo $rooms['Room_Id'] ?>">&nbsp; Room</i>
+                            <?php
+                            if($rooms['Status']=="Booked"){?>
+                                <i class="fas fa-user btn btn-primary staff_icon" data-toggle="modal" data-target="#clientModal<?php echo $rooms['Room_Id'] ?>">&nbsp; client</i>
+                            <?php }?>
                         </div>
                     </div>
                     
@@ -68,16 +84,75 @@
             ?>
         </div>
 
-        
     </div>
+
+    <!-- edit customer modal -->
+    <?php
+        $query= "SELECT * FROM  booking NATURAL JOIN customer NATURAL JOIN rooms WHERE `Status` = 'Booked'";
+        $result = mysqli_query($conn, $query);
+        while($customer= mysqli_fetch_assoc($result)){
+            $room_id= $customer['Room_Id'];
+            $room_name = $customer['Room_Name'];
+
+            $c_id = $customer['Customer_ID'];
+            $c_name = $customer['Customer_Name'];
+            $c_email = $customer['Customer_Email'];
+            $c_contact = $customer['Customer_Contact'];
+            $c_id_card = $customer['Customer_ID_Card'];
+    ?>
+        <section class="modal fade" id="clientModal<?php echo $room_id?>" tabindex="-1" role="dialog" aria-labelledby="clientModalLabel<?php echo $room_id?>" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Customer Info in Room <?php echo $room_name?></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" action="includes/dbEditCustomer.php">
+                        <main class="modal-body row" style="height:100%; row-gap:20px ">
+                            
+                            <input type="text" class="form-control" name="customer_id" value="<?php echo $c_id?>" hidden/>
+
+                            <div class="col-6">
+                                <label>Customer Name: </label> &nbsp;
+                                <input type="text" class="form-control" name="customer_name" value="<?php echo $c_name?>"/>
+                            </div>
+
+                            <div class="col-6">
+                                <label>Customer Email: </label> &nbsp;
+                                <input type="text" class="form-control" name="customer_email" value="<?php echo $c_email?>"/>
+                            </div>
+
+                            <div class="col-6">
+                                <label>Customer Contact: </label> &nbsp;
+                                <input type="text" class="form-control" name="customer_contact" value="<?php echo $c_contact?>"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                            </div>
+
+                            <div class="col-6">
+                                <label>Customer ID Card: </label> &nbsp;
+                                <input type="text" class="form-control" name="customer_ID_card" value="<?php echo $c_id_card?>"/>
+                            </div>
+                        </main>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    
+                    </form>
+                </div>
+            </div>
+        </section>
+    <?php }?>
     
-    <!--edit modal--->
+    <!--edit room modal--->
     <?php
         $roomModal_query="SELECT * FROM `rooms` Natural Join room_type";
         $roomModal_result = mysqli_query($conn, $roomModal_query);
         while ($roomModals = mysqli_fetch_assoc($roomModal_result)) {?>
 
-            <section class="modal fade" id="roomModal<?php echo $roomModals['Room_Id']?>" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel<?php echo $room['Room_Id']?>" aria-hidden="true">
+            <section class="modal fade" id="roomModal<?php echo $roomModals['Room_Id']?>" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel<?php echo $roomModals['Room_Id']?>" aria-hidden="true">
                 <div class="modal-dialog " role="document">
                     <div class="modal-content">
                         <div class="modal-header" >
@@ -86,8 +161,10 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form method="post" action="includes/dbEditRoom_Customer.php">
+                        <form method="post" action="includes/dbEditRoom.php">
                             <main class="modal-body row" style="height:100%; row-gap:20px ">
+
+                                <!-- room info -->
                                 <div class="col-6">
                                     <label>Room ID</label>
                                     <input type="text" class="form-control" id="edit_room__id" name="room__id" readonly value="<?php echo $roomModals['Room_Id']?>"/>
@@ -121,10 +198,12 @@
                                     <label>Room Status:</label> &nbsp;
                                     <em style="color:<?php if($roomModals['Status']=="Free") echo 'green'; else echo 'darkred'; ?>">(<?php echo $roomModals['Status']?>)</em>
                                 </div>
+
+                                <!-- booked room (duration and date) -->
                                 <?php 
                                     if($roomModals['Status']=="Booked"){
-                                        $RoomName = $roomModals['Room_Name'];
-                                        $query= "SELECT * FROM  booking NATURAL JOIN customer WHERE Room_Name='$RoomName'"; //SELECT * FROM rooms NATURAL JOIN booking WHERE Room_Name='$name'
+                                        $Room_Id = $roomModals['Room_Id'];
+                                        $query= "SELECT * FROM  booking WHERE Room_Id='$Room_Id'";
                                         $result = mysqli_query($conn, $query);
                                         $data = mysqli_fetch_array($result);
 
@@ -134,23 +213,6 @@
                                         $room_id = $roomModals['Room_Id'];
                                         $room_price = $roomModals['Room_Type_Price'];
                                 ?>
-                                    <div class="col-6">
-                                        <label>Customer Name: </label> &nbsp;
-                                        <input type="text" class="form-control" name="customer_name" value="<?php echo $data['Customer_Name']?>"/>
-                                    </div>
-                                    <div class="col-6">
-                                        <label>Customer Email: </label> &nbsp;
-                                        <input type="text" class="form-control" name="customer_email" value="<?php echo $data['Customer_Email']?>"/>
-                                    </div>
-                                    <div class="col-6">
-                                        <label>Customer Contact: </label> &nbsp;
-                                        <input type="text" class="form-control" name="customer_contact" value="<?php echo $data['Customer_Contact']?>"
-                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                                    </div>
-                                    <div class="col-6">
-                                        <label>Customer ID Card: </label> &nbsp;
-                                        <input type="text" class="form-control" name="customer_ID" value="<?php echo $data['Customer_ID_Card']?>"/>
-                                    </div>
                                     <div class="col-6">
                                         <label>Check In</label> &nbsp;
                                         <input type="month" class="form-control" id="room_check_in" name="room_check_in" value="<?php echo $d1?>" onchange="getDuration(room_check_in, room_check_out, room_price<?php echo $roomModals['Room_Id']?>, roomDurationEdit, roomCheckTotal)"/>
@@ -168,8 +230,11 @@
                                         <input type="text" class="form-control total_input" id="roomCheckTotal" name="room_price_total" value='<?php echo $total?> $' readonly/>
                                     </div>
                                 <?php }?>
+
                             </main>
                             <div class="modal-footer d-flex justify-content-between">
+
+                                <!-- buttons for save, cancel, checkout -->
                                 <div>
                                     <button type="submit" class="btn btn-success">Edit</button>
                                     
@@ -188,7 +253,5 @@
                     </div>
                 </div>
             </section>
-
-        <?php }
-    ?>
+    <?php }?>
 </div>

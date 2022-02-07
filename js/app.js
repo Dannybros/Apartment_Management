@@ -79,7 +79,7 @@ function fetchFreeRoom(room_id){
 
                 room_price.value=res[0].price + " $";
                 
-                total.value=(parseInt(duration.value) * res[0].price);
+                total.value=(parseInt(duration.value) * res[0].price) + " $";
                 
                 for(var i =0; i<res.length; i++){
                     var display =`
@@ -120,7 +120,7 @@ function getNextMonth(d){
     return new_year +"-"+ new_month;
 }
 
-function getDuration(d1, d2, price, duration){
+function getDuration(d1, d2, price, duration, total){
     if(d1.value!==""){
         d2.min=getNextMonth(d1.value);
         d2.focus();
@@ -136,7 +136,12 @@ function getDuration(d1, d2, price, duration){
 function cleanRoom(id, room, price, d1, d2){
 
     const d = new Date();
-    const currentDate = `${d.getFullYear()}-${d.getMonth()+1}`;
+
+    const dateMonth = (d.getMonth()+1).toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+    });
+    const currentDate = `${d.getFullYear()}-${dateMonth}`;
     const dateDiff = getMonthBetween(currentDate, d2);
 
     const confirmCheckout= confirm(`You still have ${dateDiff} months left to stay. Do you will wish to check out?`);
