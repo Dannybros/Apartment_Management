@@ -1,4 +1,9 @@
     <div class="col-sm-9 main_box">
+        <!-- create ROom button div -->
+        <div class="d-flex justify-content-between align-items-center p-3 room_page_nav">
+            ROOMS
+            <button class="btn btn-primary" data-toggle="modal" data-target="#CreateRoomModal">Add New Room</button>
+        </div>
         <!-- nav searchbar -->
         <div class="d-flex justify-content-between align-items-center room_search_bar">
             <select name="floor" id="TypeSelector" class="floorSelector" onchange="showRooms(this.value)">
@@ -10,7 +15,6 @@
                 <option value="5">King-Sized Rooms</option>
                 <option value="6">Master-Suite Rooms</option>
             </select>
-            ROOMS
             <div class="input-group" style="width: 200px !important;">
                 <div class="input-group-prepend" >
                     <span class="input-group-text" style="background:white; width:40px; padding:0 auto;" id="basic-addon1"><i class="fas fa-search"></i></span>
@@ -32,8 +36,13 @@
                 $msg = "";
                 if($_GET['success'] == "checkout"){
                     $msg="Room Check Out successfully!";
+
                 }else if($_GET['success'] == "customerInfo"){
                     $msg="Customer Info has edited successfully!";
+
+                }else if($_GET['success'] == "createRoom"){
+                    $msg="New Room has been successfully created!";
+
                 }else{
                     $msg="Room has edited successfully!";
                 }
@@ -83,7 +92,57 @@
                 <?php  }
             ?>
         </div>
+    </div>
 
+
+    <!-- Create Room Modal -->
+    <div class="modal fade" id="CreateRoomModal" tabindex="-1" role="dialog" aria-labelledby="CreateRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="CreateRoomModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <form method="post" action="includes/dbCreateRoom.php">
+                    <main class="modal-body row" style="height:100%; row-gap:20px" >
+                        <div class="col-6">
+                            <label>Room Name</label>
+                            <input type="text" class="form-control" name="room__name" data-error="please fill in the room title" required/>
+                        </div>
+                        <div class="col-6">
+                            <label>Room Type</label>
+                            <select 
+                            name="room_modal_type" 
+                            class=" form-control"
+                            style="cursor:pointer; color:black" 
+                            onchange="getRoomTypePrice(this.value, '-New_room')"
+                            data-error="please choose the room type"
+                            required
+                            >
+                                <option selected disabled> </option>
+                                <option value="1">Single Rooms</option>
+                                <option value="2">Double Rooms</option>
+                                <option value="3">Triple Rooms</option>
+                                <option value="4">Family Rooms</option>
+                                <option value="5">King-Sized Rooms</option>
+                                <option value="6">Master-Suite Rooms</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label>Room Price</label>
+                            <input type="text" class="form-control" id="room_price-New_room" name="room__price" disabled value="0$ / month"/>
+                        </div>
+                    </main>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="reset" class="btn btn-warning" style="color:white">Start New</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- edit customer modal -->
@@ -162,7 +221,7 @@
                             </button>
                         </div>
                         <form method="post" action="includes/dbEditRoom.php">
-                            <main class="modal-body row" style="height:100%; row-gap:20px ">
+                            <main class="modal-body row" style="height:100%; row-gap:20px">
 
                                 <!-- room info -->
                                 <div class="col-6">
@@ -181,7 +240,7 @@
                                     class=" form-control"
                                     style="cursor:pointer; color:black" 
                                     onchange="getRoomTypePrice(this.value, <?php echo $roomModals['Room_Id']?>)"
-                                    >
+                                    > 
                                         <option value="1" <?php if($roomModals['Room_Type_Id']=="1") echo 'selected="selected" '?> >Single Rooms</option>
                                         <option value="2" <?php if($roomModals['Room_Type_Id']=="2") echo 'selected="selected" '?> >Double Rooms</option>
                                         <option value="3" <?php if($roomModals['Room_Type_Id']=="3") echo 'selected="selected" '?> >Triple Rooms</option>
@@ -244,7 +303,7 @@
                                     <?php
                                         if($roomModals['Status']=="Booked"){
                                     ?>
-                                        <button type="button" class="btn btn-warning" onclick='cleanRoom(<?php echo "`$room_id`,`$RoomName`,`$room_price`, `$d1`, `$d2`" ?>)'>Check Out</button>
+                                        <button type="button" class="btn btn-warning" onclick='cleanRoom(<?php echo "`$room_id`,`$room_price`, `$d1`, `$d2`" ?>)'>Check Out</button>
                                     <?php } ?>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>

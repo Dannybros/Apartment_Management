@@ -48,10 +48,10 @@ function callRooms(query){
     })
 }
 
-function getRoomTypePrice(roomId, id){
+function getRoomTypePrice(roomTypeId, id){
     var price = document.getElementById(`room_price${id}`);
     $.ajax({
-        url:`includes/dbGetRoomPrice.php?roomType=${roomId}`,
+        url:`includes/dbGetRoomPrice.php?roomType=${roomTypeId}`,
         type:"GET",
         dataType:"JSON",
         success: function(res){
@@ -59,7 +59,6 @@ function getRoomTypePrice(roomId, id){
             price.value = val+"$ / month";
         }   
     })
-
 }
 
 function fetchFreeRoom(room_id){
@@ -133,7 +132,7 @@ function getDuration(d1, d2, price, duration, total){
     }
 }
 
-function cleanRoom(id, room, price, d1, d2){
+function cleanRoom(roomId, price, d1, d2){
 
     const d = new Date();
 
@@ -151,8 +150,7 @@ function cleanRoom(id, room, price, d1, d2){
             const duration = getMonthBetween(d1, currentDate);
             const total = price * duration;
             dataOption={
-                id:id,
-                room:room,
+                id:roomId,
                 d2:currentDate,
                 duration:duration,
                 total:total,

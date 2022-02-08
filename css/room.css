@@ -1,7 +1,10 @@
+.room_page_nav{
+    border-bottom: 1px solid grey;
+    font-size: 30px;
+}
 .room_search_bar{
     border-bottom: 1px solid grey;
     padding-bottom: 10px;
-    font-size: 30px;
     font-family: 'Times New Roman', Times, serif;
 }
 .floorSelector{
