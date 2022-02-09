@@ -20,7 +20,7 @@
     }else if(isset($_GET['staff'])){
         include_once "dashboard/staff.php";
         
-    }else if(isset($_GET['edit'])){
+    }else if(isset($_GET['setting'])){
         include_once "dashboard/setting.php";
         
     }else{

@@ -21,7 +21,7 @@
                 }
             ?>
         </div>
-        <form class="container my-4" action="includes/dbBooking.php" method="post">
+        <form class="container my-4" action="includes/bookingDB/dbBooking.php" method="post">
             <main class="bg-white h-100 p-3">
                 <h4 class="reservation_title pb-2 mb-4">
                     Room Information

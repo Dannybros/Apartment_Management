@@ -6,7 +6,7 @@
     <script src="js/app.js"></script>
     
     <script>
-        $(".alert").delay(3000).slideUp(200, function() {
+        $(".alert").delay(1500).slideUp(200, function() {
             $(this).alert('close');
         });
     </script>

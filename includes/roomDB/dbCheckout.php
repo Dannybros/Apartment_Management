@@ -1,5 +1,5 @@
 <?php
-include_once ("dbConnect.php");
+include_once ("../dbConnect.php");
 session_start();
 
     $checkoutTime= $_GET['checkout'];

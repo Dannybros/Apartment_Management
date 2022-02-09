@@ -15,7 +15,7 @@
 }
 .display__room{
     width: 100%;
-    height: calc(100% - 70px);
+    height: calc(100% - 120px);
     padding: 10px 0;
     box-sizing: border-box;
     overflow-y:scroll;
@@ -83,7 +83,6 @@
     align-items: center;
     justify-content: center;
 }
-
 .modal-footer{
     float: end !important;
 }

@@ -1,6 +1,6 @@
     <div class="col-sm-9 main_box">
         <!-- create ROom button div -->
-        <div class="d-flex justify-content-between align-items-center p-3 room_page_nav">
+        <div class="d-flex justify-content-between align-items-center py-2 mb-2 room_page_nav">
             ROOMS
             <button class="btn btn-primary" data-toggle="modal" data-target="#CreateRoomModal">Add New Room</button>
         </div>
@@ -34,16 +34,22 @@
             }
             if(isset($_GET['success'])){
                 $msg = "";
-                if($_GET['success'] == "checkout"){
-                    $msg="Room Check Out successfully!";
-
-                }else if($_GET['success'] == "customerInfo"){
-                    $msg="Customer Info has edited successfully!";
-
-                }else if($_GET['success'] == "createRoom"){
+                if($_GET['success'] == "createRoom"){
                     $msg="New Room has been successfully created!";
-
-                }else{
+                } 
+                else if($_GET['success'] == "customerInfo"){
+                    $msg="Customer Info has edited successfully!";
+                }
+                else if($_GET['success'] == "checkout"){
+                    $msg="Room Check Out successfully!";
+                }
+                else if($_GET['success'] == "createRoom"){
+                    $msg="New Room has been successfully created!";
+                }
+                else if($_GET['success'] == "del"){
+                    $msg="Room has been successfully deleted!";
+                }
+                else{
                     $msg="Room has edited successfully!";
                 }
                 echo"
@@ -58,7 +64,7 @@
         <!-- display every room info -->
         <div class="display__room row" id="display__room">
             <?php
-                $room_query = "SELECT * FROM `rooms` NATURAL JOIN `room_type`";
+                $room_query = "SELECT * FROM `rooms` NATURAL JOIN `room_type` ORDER BY Room_Name";
                 $room_result = mysqli_query($conn, $room_query);
                 while ($rooms = mysqli_fetch_assoc($room_result)) {?>
                     <div class="room__one" >
@@ -84,7 +90,7 @@
                             <i class="fas fa-pen btn btn-success staff_icon" data-toggle="modal" data-target="#roomModal<?php echo $rooms['Room_Id'] ?>">&nbsp; Room</i>
                             <?php
                             if($rooms['Status']=="Booked"){?>
-                                <i class="fas fa-user btn btn-primary staff_icon" data-toggle="modal" data-target="#clientModal<?php echo $rooms['Room_Id'] ?>">&nbsp; client</i>
+                                <i class="fas fa-user btn btn-primary staff_icon" data-toggle="modal" data-target="#clientModal<?php echo $rooms['Room_Id'] ?>">&nbsp; Client</i>
                             <?php }?>
                         </div>
                     </div>
@@ -105,7 +111,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-                <form method="post" action="includes/dbCreateRoom.php">
+                <form method="post" action="includes/roomDB/dbCreateRoom.php">
                     <main class="modal-body row" style="height:100%; row-gap:20px" >
                         <div class="col-6">
                             <label>Room Name</label>
@@ -168,7 +174,7 @@
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="post" action="includes/dbEditCustomer.php">
+                    <form method="post" action="includes/customerDB/dbEditCustomer.php">
                         <main class="modal-body row" style="height:100%; row-gap:20px ">
                             
                             <input type="text" class="form-control" name="customer_id" value="<?php echo $c_id?>" hidden/>
@@ -220,7 +226,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form method="post" action="includes/dbEditRoom.php">
+                        <form method="post" action="includes/roomDB/dbEditRoom.php">
                             <main class="modal-body row" style="height:100%; row-gap:20px">
 
                                 <!-- room info -->
@@ -258,7 +264,7 @@
                                     <em style="color:<?php if($roomModals['Status']=="Free") echo 'green'; else echo 'darkred'; ?>">(<?php echo $roomModals['Status']?>)</em>
                                 </div>
 
-                                <!-- booked room (duration and date) -->
+                                <!-- additional info for booked room (duration and date) -->
                                 <?php 
                                     if($roomModals['Status']=="Booked"){
                                         $Room_Id = $roomModals['Room_Id'];
@@ -269,7 +275,6 @@
                                         $total=$data['Total'];
                                         $d1= $data['Check_In'];
                                         $d2 = $data['Check_Out'];
-                                        $room_id = $roomModals['Room_Id'];
                                         $room_price = $roomModals['Room_Type_Price'];
                                 ?>
                                     <div class="col-6">
@@ -292,19 +297,30 @@
 
                             </main>
                             <div class="modal-footer d-flex justify-content-between">
-
-                                <!-- buttons for save, cancel, checkout -->
                                 <div>
+
+                                    <!-- button for save-->
                                     <button type="submit" class="btn btn-success">Edit</button>
                                     
-                                    <button type="reset" class="btn btn-danger">Default</button>
+                                    <!-- button for reset the modal -->
+                                    <button type="reset" class="btn btn-warning">Default</button>
                                 </div>
                                 <div>
+
+                                    <!-- button for checkout -->
                                     <?php
                                         if($roomModals['Status']=="Booked"){
                                     ?>
-                                        <button type="button" class="btn btn-warning" onclick='cleanRoom(<?php echo "`$room_id`,`$room_price`, `$d1`, `$d2`" ?>)'>Check Out</button>
+                                        <button type="button" class="btn btn-info" onclick='cleanRoom(<?php echo "`$Room_Id`,`$room_price`, `$d1`, `$d2`" ?>)'>Check Out</button>
                                     <?php } ?>
+
+                                    <!-- button for del room -->
+                                    <?php
+                                        if($roomModals['Status']=="Free"){?>
+                                            <button type="button" class="btn btn-danger" onclick='delRoom(<?php echo $roomModals["Room_Id"] ?>)'>Delete</button>
+                                    <?php } ?>
+
+                                    <!-- button close modal -->
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>

@@ -1,5 +1,5 @@
 <?php
-include_once "dbConnect.php";
+include_once ("../dbConnect.php");
 session_start();
 
     //info for booking
@@ -29,7 +29,7 @@ session_start();
         if($result){
             return true;
             }else{
-            header("Location: ../index.php?booking&failed");
+            header("Location: ../../index.php?booking&failed");
             exit();
             }
     }
@@ -42,7 +42,7 @@ session_start();
         if($result){
             return true;
          }else{
-            header("Location: ../index.php?booking&failed");
+            header("Location: ../../index.php?booking&failed");
             exit();
          }
     }
@@ -60,10 +60,10 @@ session_start();
         $result = mysqli_query($conn, $sql);
 
         if($result){
-            header("Location: ../index.php?booking&success");
+            header("Location: ../../index.php?booking&success");
             exit();
         }else{
-            header("Location: ../index.php?booking&failed");
+            header("Location: ../../index.php?booking&failed");
             exit();
         }
     }

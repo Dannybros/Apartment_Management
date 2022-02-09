@@ -1,5 +1,5 @@
 <?php
-include_once ("dbConnect.php");
+include_once ("../dbConnect.php");
 session_start();
 if(isset($_POST['room__name'])){
     $room_name = $_POST['room__name'];
@@ -15,10 +15,10 @@ function createNewRoom($conn, $room_name, $room_type_id){
     $result=mysqli_query($conn, $sql);
 
     if ($result){
-        header("Location:../index.php?room&success=customerInfo");
+        header("Location:../../index.php?room&success=customerInfo");
         exit();
     }else{
-        header("Location:../index.php?room&error");
+        header("Location:../../index.php?room&error");
         exit();
     }
 }

@@ -1,5 +1,5 @@
 <?php
-include_once ("dbConnect.php");
+include_once ("../dbConnect.php");
 session_start();
 
 if(isset($_POST['room_modal_type'])){
@@ -31,11 +31,11 @@ function UpdateRoomInfo($conn, $room_name, $room_type, $room_id){
 
     $result = mysqli_query($conn, $sql);
     if ($result) {
-        header("Location:../index.php?room&success");
+        header("Location:../../index.php?room&success");
         exit();
     } else {
 
-        header("Location:../index.php?room&error");
+        header("Location:../../index.php?room&error");
         exit();
     }
 }
@@ -46,11 +46,11 @@ function UpdateDateStay($conn, $duration, $checkIn, $checkOut, $total, $room_id)
 
     $result = mysqli_query($conn, $sql);
     if ($result) {
-        header("Location:../index.php?room&success");
+        header("Location:../../index.php?room&success");
         exit();
     } else {
 
-        header("Location:../index.php?room&error");
+        header("Location:../../index.php?room&error");
         exit();
     }
 }

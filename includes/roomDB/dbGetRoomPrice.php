@@ -1,5 +1,5 @@
 <?php
-    include_once("dbConnect.php");
+    include_once ("../dbConnect.php");
     if (isset($_GET['roomType'])){
 
         $id = $_GET['roomType'];

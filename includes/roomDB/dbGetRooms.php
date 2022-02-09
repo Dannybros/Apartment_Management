@@ -1,6 +1,8 @@
 <?php
-    include_once("dbConnect.php");
+include_once ("../dbConnect.php");
     if (isset($_GET['query'])){
+
+        // fetch all the rooms 
 
         $return_arr = array();
 
@@ -10,7 +12,7 @@
         $s = $search_qqq[1];
 
         if($t==="all"){
-            $query = "SELECT * FROM `rooms` NATURAL JOIN `room_type` WHERE `Room_Name` LIKE '%$s%' OR `Status` LIKE '%$s%'";
+            $query = "SELECT * FROM `rooms` NATURAL JOIN `room_type` WHERE `Room_Name` LIKE '%$s%' OR `Status` LIKE '%$s%' ORDER BY Room_Name;";
         }else{
             $query = "SELECT * FROM `rooms` NATURAL JOIN `room_type` WHERE `Room_Type_Id` = '$t' AND (`Room_Name` LIKE '%$s%' OR `Status` LIKE '%$s%')"; 
         }
@@ -36,6 +38,8 @@
         echo json_encode($return_arr);
          
     }else if (isset($_GET['roomId'])){
+
+        // fetch only free rooms
 
         $id = $_GET['roomId'];
         $return_arr = array();

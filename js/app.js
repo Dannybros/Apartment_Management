@@ -1,20 +1,20 @@
  function showRooms(str){
     var search_query = document.getElementById('roomSearchBar').value;
     let sendQ = `${str}*${search_query}`;
-    callRooms(sendQ);
+    loadRooms(sendQ);
 }
 
 function searchRoom(search){
     let room_type = document.getElementById('TypeSelector').value;
     let searchQ = `${room_type}*${search.value}`;
-    callRooms(searchQ);
+    loadRooms(searchQ);
 }
 
-function callRooms(query){
+function loadRooms(query){
     
     var display_room = document.getElementById('display__room');
     $.ajax({
-        url:`includes/dbGetRooms.php?query=${query}`,
+        url:`includes/roomDB/dbGetRooms.php?query=${query}`,
         type:"GET",
         dataType:"JSON",
         success: function(res){
@@ -29,18 +29,25 @@ function callRooms(query){
                 }
 
                 var display=`
-                    <div class="room__one"  data-toggle="modal" data-target="#roomModal${res[i].id}">
+                    <div class="room__one">
                         <div class="room_box" style='${style}'>
                             ${res[i].name}
                         </div>
-                        <div style="background:white; cursor:pointer; user-select:none"> 
+                        <div style="background:white; cursor:pointer; user-select:none border-bottom:1px solid grey"> 
                         ${res[i].type} Room
                             &nbsp; 
-                            (${res[i].status})
+                            (${status})
+                        </div>
+                        <div class="bg-white p-2 d-flex justify-content-around">
+                            <i class="fas fa-pen btn btn-success staff_icon" data-toggle="modal" data-target="#roomModal${res[i].id}">&nbsp; Room</i>
+                            ${status==='Booked'?
+                               `<i class="fas fa-user btn btn-primary staff_icon" data-toggle="modal" data-target="#clientModal${res[i].id}">&nbsp; Client</i>`
+                               :
+                               ``                       
+                            }
                         </div>
                     </div>
                 `
-
                display_room.innerHTML+=display;
             }
         }
@@ -51,7 +58,7 @@ function callRooms(query){
 function getRoomTypePrice(roomTypeId, id){
     var price = document.getElementById(`room_price${id}`);
     $.ajax({
-        url:`includes/dbGetRoomPrice.php?roomType=${roomTypeId}`,
+        url:`includes/roomDB/dbGetRoomPrice.php?roomType=${roomTypeId}`,
         type:"GET",
         dataType:"JSON",
         success: function(res){
@@ -70,7 +77,7 @@ function fetchFreeRoom(room_id){
 
     if(room_id!=null){
         $.ajax({
-            url:`includes/dbGetRooms.php?roomId=${room_id}`,
+            url:`includes/roomDB/dbGetRooms.php?roomId=${room_id}`,
             type:"GET",
             dataType:"JSON",
             success: function(res){
@@ -140,10 +147,12 @@ function cleanRoom(roomId, price, d1, d2){
         minimumIntegerDigits: 2,
         useGrouping: false
     });
+
     const currentDate = `${d.getFullYear()}-${dateMonth}`;
     const dateDiff = getMonthBetween(currentDate, d2);
 
     const confirmCheckout= confirm(`You still have ${dateDiff} months left to stay. Do you will wish to check out?`);
+
     if(confirmCheckout){
         let dataOption={};
         if(dateDiff>0){
@@ -164,7 +173,7 @@ function cleanRoom(roomId, price, d1, d2){
         }
 
         $.ajax({
-            url:`includes/dbCheckout.php`,
+            url:`includes/roomDB/dbCheckout.php`,
             type:"GET",
             data:dataOption,
             success: function(res){
@@ -178,4 +187,22 @@ function cleanRoom(roomId, price, d1, d2){
         })
     }
 
+}
+
+function delRoom(roomId){
+    $.ajax({
+        url:`includes/roomDB/dbDelRoom.php`,
+        type:"GET",
+        data:{
+            id:roomId
+        },
+        success: function(res){
+            if(res==='success'){
+                window.location.replace('index.php?room&success=del');
+            }
+            if(res==='failed'){
+                alert("SQL failed. Please try again");
+            }
+        }
+    })
 }
