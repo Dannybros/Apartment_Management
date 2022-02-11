@@ -57,7 +57,6 @@
                        <b> $msg </b>
                     </div>
                 ";
-                
             }
         ?>
 
@@ -241,11 +240,11 @@
                                 <div class="col-6">
                                     <label>Room Type</label>
                                     <select 
-                                    name="room_modal_type" 
-                                    <?php if($roomModals['Status']!="Free") echo 'disabled'?>
-                                    class=" form-control"
-                                    style="cursor:pointer; color:black" 
-                                    onchange="getRoomTypePrice(this.value, <?php echo $roomModals['Room_Id']?>)"
+                                     name="room_modal_type" 
+                                     <?php if($roomModals['Status']!="Free") echo 'disabled'?>
+                                     class=" form-control"
+                                     style="cursor:pointer; color:black" 
+                                     onchange="getRoomTypePrice(this.value, <?php echo $roomModals['Room_Id']?>)"
                                     > 
                                         <option value="1" <?php if($roomModals['Room_Type_Id']=="1") echo 'selected="selected" '?> >Single Rooms</option>
                                         <option value="2" <?php if($roomModals['Room_Type_Id']=="2") echo 'selected="selected" '?> >Double Rooms</option>
