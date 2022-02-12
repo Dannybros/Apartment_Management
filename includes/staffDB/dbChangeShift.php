@@ -6,6 +6,7 @@ if($_POST['staff_shift_cb']){
     $shiftId = $_POST['staff_shift_cb'];
     $staffId = $_POST['staff_id'];
 
+
     $sql = "UPDATE `staff` SET `Shift_Id`='$shiftId' WHERE `Staff_ID`='$staffId'";
     $result = mysqli_query($conn, $sql);
 

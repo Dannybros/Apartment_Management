@@ -3,7 +3,6 @@ include_once ("../dbConnect.php");
     if (isset($_GET['query'])){
 
         // fetch all the rooms 
-
         $return_arr = array();
 
         $q = $_GET['query'];
