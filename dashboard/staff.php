@@ -88,7 +88,7 @@
                                 <span class="col-2 staff_list justify-content-around">
                                         <i class="fas fa-pen btn btn-primary staff_icon" data-toggle="modal" data-target="#EditStaff<?php echo $staff['Staff_ID']?>"></i>
                                         <i class="fas fa-trash btn btn-danger staff_icon" onclick="delStaff(<?php echo $staff['Staff_ID']?>)"></i>
-                                        <i class="fas fa-eye btn btn-success staff_icon"></i>
+                                        <i class="fas fa-eye btn btn-success staff_icon" data-toggle="modal" data-target="#ViewStaff<?php echo $staff['Staff_ID']?>"></i>
                                 </span>
                             </li>
                     <?php }?>
@@ -320,6 +320,102 @@
                     </div>
                 </div>
 
+            <?php  }?>
+
+            
+
+            <!-- View Staff Info -->
+            <?php
+              $sql = "SELECT * FROM `staff` NATURAL JOIN shift NATURAL JOIN staff_type";
+              $result = mysqli_query($conn, $sql);
+              while($staff = mysqli_fetch_array($result)){ ?>
+            
+                <div class="modal fade" id="ViewStaff<?php echo $staff['Staff_ID']?>" tabindex="-1" role="dialog" aria-labelledby="ViewStaffLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ViewStaffLabel">
+                                View Info Of Staff -
+                                <b style="text-transform:capitalize"><?php echo $staff["Staff_Name"]?></b>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-3">
+                            <ul class="staff_info_list" style="">
+                                <li class="row py-2" >
+                                    <div class="col-5" style="border-right:1px solid;">
+                                        <b>Staff ID</b> 
+                                    </div>
+                                    <div class="col-7">
+                                        <?php echo $staff["Staff_ID"]?>
+                                    </div>
+                                </li>
+                                <li class="row py-2" >
+                                    <div class="col-5" style="border-right:1px solid;">
+                                        <b>Staff Name</b> 
+                                    </div>
+                                    <div class="col-7">
+                                        <?php echo $staff["Staff_Name"]?>
+                                    </div>
+                                </li>
+                                <li class="row py-2" >
+                                    <div class="col-5" style="border-right:1px solid;">
+                                        <b>Staff Address</b> 
+                                    </div>
+                                    <div class="col-7">
+                                        <?php echo $staff["Address"]?>
+                                    </div>
+                                </li>
+                                <li class="row py-2" >
+                                    <div class="col-5" style="border-right:1px solid;">
+                                        <b>Staff Contact</b> 
+                                    </div>
+                                    <div class="col-7">
+                                        <?php echo $staff["Contact"]?>
+                                    </div>
+                                </li>
+                                <li class="row py-2" >
+                                    <div class="col-5" style="border-right:1px solid;">
+                                        <b>Staff Joining Date</b> 
+                                    </div>
+                                    <div class="col-7">
+                                        <?php echo $staff["Joining_Date"]?>
+                                    </div>
+                                </li>
+                                <li class="row py-2" >
+                                    <div class="col-5" style="border-right:1px solid;">
+                                        <b>Staff Job</b> 
+                                    </div>
+                                    <div class="col-7">
+                                        <?php echo $staff["Staff_Job_Name"]?>
+                                    </div>
+                                </li>
+                                <li class="row py-2" >
+                                    <div class="col-5" style="border-right:1px solid;">
+                                        <b>Salary</b> 
+                                    </div>
+                                    <div class="col-7">
+                                        <?php echo $staff["Salary"]?>
+                                    </div>
+                                </li>
+                                <li class="row py-2" >
+                                    <div class="col-5" style="border-right:1px solid;">
+                                        <b>Shift</b> 
+                                    </div>
+                                    <div class="col-7">
+                                        <?php echo $staff["Shift_Name"], " ", $staff["Shift_Time"]?>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
             <?php  }?>
        </div>
     </div>

@@ -40,3 +40,16 @@
     cursor: pointer;
     margin-right: 0 !important;
 }
+.staff_info_list{
+    border:1px solid; 
+    padding:0;
+    margin-bottom: 0;
+}
+.staff_info_list li{
+    height:auto; 
+    border-bottom:1px solid;
+    user-select: none;
+}
+.staff_info_list li:last-child{
+    border-bottom:none;
+}
