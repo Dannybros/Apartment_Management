@@ -2,7 +2,7 @@
      $query = "SELECT * FROM  `rooms` NATURAL JOIN `room_type` WHERE `Status` = 'Free'";
      $result = mysqli_query($conn, $query);
     ?>
-    <section class="col-sm-9 main_box" id="reservation_section" style="overflow-y:scroll">
+    <section class="col-sm-9 main_box" id="reservation_section">
         <div id="alertDialog">
             <?php
                 if(isset($_GET['success'])){

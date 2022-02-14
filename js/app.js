@@ -280,3 +280,26 @@ function searchStaff(search){
         }
     })
 }
+
+//setting
+function delRoomType(RoomTypeID){
+    const confirmDelStaff= confirm(`Do you wish to delete this Room Type (${RoomTypeID})?`);
+
+    if(confirmDelStaff){
+        $.ajax({
+            url:`includes/settingDB/dbDelRoomType.php`,
+            type:"GET",
+            data:{
+                id:RoomTypeID
+            },
+            success: function(res){
+                if(res==='success'){
+                    window.location.replace('index.php?setting&success=delRoomType');
+                }
+                if(res==='failed'){
+                    alert("SQL failed. Please try again");
+                }
+            }
+        })
+    }
+}

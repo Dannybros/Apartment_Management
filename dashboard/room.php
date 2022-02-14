@@ -99,7 +99,6 @@
         </div>
     </div>
 
-
     <!-- Create Room Modal -->
     <div class="modal fade" id="CreateRoomModal" tabindex="-1" role="dialog" aria-labelledby="CreateRoomModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -162,53 +161,53 @@
             $c_name = $customer['Customer_Name'];
             $c_email = $customer['Customer_Email'];
             $c_contact = $customer['Customer_Contact'];
-            $c_id_card = $customer['Customer_ID_Card'];
-    ?>
-        <section class="modal fade" id="clientModal<?php echo $room_id?>" tabindex="-1" role="dialog" aria-labelledby="clientModalLabel<?php echo $room_id?>" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Customer Info in Room <?php echo $room_name?></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="post" action="includes/customerDB/dbEditCustomer.php">
-                        <main class="modal-body row" style="height:100%; row-gap:20px ">
-                            
-                            <input type="text" class="form-control" name="customer_id" value="<?php echo $c_id?>" hidden/>
-
-                            <div class="col-6">
-                                <label>Customer Name: </label> &nbsp;
-                                <input type="text" class="form-control" name="customer_name" value="<?php echo $c_name?>"/>
-                            </div>
-
-                            <div class="col-6">
-                                <label>Customer Email: </label> &nbsp;
-                                <input type="text" class="form-control" name="customer_email" value="<?php echo $c_email?>"/>
-                            </div>
-
-                            <div class="col-6">
-                                <label>Customer Contact: </label> &nbsp;
-                                <input type="text" class="form-control" name="customer_contact" value="<?php echo $c_contact?>"
-                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                            </div>
-
-                            <div class="col-6">
-                                <label>Customer ID Card: </label> &nbsp;
-                                <input type="text" class="form-control" name="customer_ID_card" value="<?php echo $c_id_card?>"/>
-                            </div>
-                        </main>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            $c_id_card = $customer['Customer_ID_Card']; ?>
+            <section class="modal fade" id="clientModal<?php echo $room_id?>" tabindex="-1" role="dialog" aria-labelledby="clientModalLabel<?php echo $room_id?>" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Customer Info in Room <?php echo $room_name?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    
-                    </form>
+                        <form method="post" action="includes/customerDB/dbEditCustomer.php">
+                            <main class="modal-body row" style="height:100%; row-gap:20px ">
+                                
+                                <input type="text" class="form-control" name="customer_id" value="<?php echo $c_id?>" hidden/>
+
+                                <div class="col-6">
+                                    <label>Customer Name: </label> &nbsp;
+                                    <input type="text" class="form-control" name="customer_name" value="<?php echo $c_name?>"/>
+                                </div>
+
+                                <div class="col-6">
+                                    <label>Customer Email: </label> &nbsp;
+                                    <input type="text" class="form-control" name="customer_email" value="<?php echo $c_email?>"/>
+                                </div>
+
+                                <div class="col-6">
+                                    <label>Customer Contact: </label> &nbsp;
+                                    <input type="text" class="form-control" name="customer_contact" value="<?php echo $c_contact?>"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                </div>
+
+                                <div class="col-6">
+                                    <label>Customer ID Card: </label> &nbsp;
+                                    <input type="text" class="form-control" name="customer_ID_card" value="<?php echo $c_id_card?>"/>
+                                </div>
+                            </main>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </section>
-    <?php }?>
+            </section>
+        <?php }
+    ?>
     
     <!--edit room modal--->
     <?php

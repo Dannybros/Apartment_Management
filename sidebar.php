@@ -1,6 +1,10 @@
 <div class="row">
     <div id="sidebar-collapse" class="col-sm-3 sidebar">
-        <div class="profile_sidebar p-3">
+        <div id = "sidebar_nav" class="sidebar_nav">
+            <span style="color:gold">Apartment &nbsp; </span> Management System</a>
+        </div>
+        
+        <div class="profile_sidebar p-3 mb-2">
             <img src="img/user.png" alt="user">
             <div class="profile_name">
                 <span>
@@ -12,6 +16,7 @@
                 </div> 
             </div>
         </div>
+
         <ul class="menu__box">
             <li>
                 <a href="index.php?room" class="menu__list <?php if (isset($_GET['room'])) echo 'active_list'?>">
@@ -39,12 +44,12 @@
             </li>
             
         </ul>
-        <section class="date_display">
+        <section class="date_display mx-3">
             <?php 
                 date_default_timezone_set("Asia/Bangkok");
                 $date = date("Y/m/d");
                 $time = date("h:i:a");
-                echo "Today is <b> $date &nbsp; $time</b>";
+                echo "Today is <b> $date &nbsp; ($time)</b>";
             ?>
             <br/>
             You have logged in <span id="second_counter">00:00</span> seconds ago

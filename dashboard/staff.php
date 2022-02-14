@@ -1,5 +1,5 @@
     <div class="col-sm-9 main_box" style="box-sizing: border-box;">
-       <div class="bg-white mx-3 my-4 p-3" style="margin-top: 20px;">
+       <div class="bg-white m-3 p-3" style="margin-top: 10px;">
 
             <!-- nav & search bar  -->
            <div class="staffNav p-3 d-flex justify-content-between">
@@ -322,8 +322,6 @@
 
             <?php  }?>
 
-            
-
             <!-- View Staff Info -->
             <?php
               $sql = "SELECT * FROM `staff` NATURAL JOIN shift NATURAL JOIN staff_type";
@@ -343,7 +341,7 @@
                             </button>
                         </div>
                         <div class="modal-body p-3">
-                            <ul class="staff_info_list" style="">
+                            <ul class="staff_info_list">
                                 <li class="row py-2" >
                                     <div class="col-5" style="border-right:1px solid;">
                                         <b>Staff ID</b> 

@@ -1,0 +1,30 @@
+.setting-section-title{
+    font-weight: bold;
+    color: black;
+    font-size: 20px;
+    background: transparent;
+    border: none !important;
+    cursor: pointer;
+}
+.setting-section-title:focus{
+    outline: none !important;
+}
+.setting-section-title:hover{
+    border-bottom: 1px solid grey;
+    color: black;
+    outline: none !important;
+}
+.room_type_setting_table{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: capitalize;
+    border-bottom: 1px solid grey;
+}
+.room_type_setting_table:nth-child(even){
+    background: rgb(233, 233, 233);
+}
+.room_type_setting_table:first-child{
+    font-weight: bold;
+    font-size: 18px;
+}

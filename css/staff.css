@@ -1,13 +1,13 @@
 .staffNav{
     border-bottom: 1px solid grey;
-    height: auto;
+    height: 100%;
 }
 .input-group-text{
     padding-right: 6px;
     text-align: center;
 }
 .staff_page{
-    /* height: 480px; */
+    height: 100%;
 }
 .staff_table{
     list-style: none;

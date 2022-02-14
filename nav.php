@@ -10,6 +10,7 @@
     <link href="css/reservation.css" type="text/css" rel="stylesheet">
     <link href="css/room.css" type="text/css" rel="stylesheet">
     <link href="css/staff.css" type="text/css" rel="stylesheet">
+    <link href="css/setting.css" type="text/css" rel="stylesheet">
     <title>Apartment System</title>
 </head>
 <body style="box-sizing: content-box;">

@@ -10,5 +10,18 @@
             $(this).alert('close');
         });
     </script>
+    <script>
+        var sidebar_nav = document.getElementById('sidebar_nav');
+       var myScrollFunc = function() {
+            var y = window.scrollY;
+            if (y >= 60) {
+                sidebar_nav.className="sidebar_nav show"
+            } else {
+                sidebar_nav.className="sidebar_nav hide"
+            }
+        };
+
+        window.addEventListener("scroll", myScrollFunc);
+    </script>
 </body>
 </html>

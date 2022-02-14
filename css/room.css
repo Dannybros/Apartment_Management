@@ -15,10 +15,10 @@
 }
 .display__room{
     width: 100%;
-    height: calc(100% - 120px);
+    height: auto;
+    /* height: calc(100% - 120px); */
     padding: 10px 0;
-    box-sizing: border-box;
-    overflow-y:scroll;
+    /* overflow-y: scroll; */
 }
 .room__one{
     width: 25%;
