@@ -282,19 +282,21 @@ function searchStaff(search){
 }
 
 //setting
-function delRoomType(RoomTypeID){
-    const confirmDelStaff= confirm(`Do you wish to delete this Room Type (${RoomTypeID})?`);
+function delSettingType(dataTable, dataField, RoomTypeID){
+    const confirmDelStaff= confirm(`Do you wish to delete ?`);
 
     if(confirmDelStaff){
         $.ajax({
-            url:`includes/settingDB/dbDelRoomType.php`,
+            url:`includes/settingDB/dbDelSettingType.php`,
             type:"GET",
             data:{
-                id:RoomTypeID
+                id:RoomTypeID,
+                dt:dataTable,
+                dt_field:dataField
             },
             success: function(res){
                 if(res==='success'){
-                    window.location.replace('index.php?setting&success=delRoomType');
+                    window.location.replace('index.php?setting&success=delSetting');
                 }
                 if(res==='failed'){
                     alert("SQL failed. Please try again");

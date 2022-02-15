@@ -3,8 +3,10 @@ include_once ("../dbConnect.php");
 session_start();
 
     $id = $_GET['id'];
+    $dt = $_GET['dt'];
+    $dt_field = $_GET['dt_field'];
 
-    $sql ="DELETE FROM `room_type` WHERE `Room_Type_Id`='$id'";
+    $sql ="DELETE FROM `$dt` WHERE `$dt_field`='$id'";
 
     $result = mysqli_query($conn, $sql);
     if($result){

@@ -23,6 +23,9 @@
     }else if(isset($_GET['setting'])){
         include_once "dashboard/setting.php";
         
+    }else if(isset($_GET['report'])){
+        include_once "dashboard/report.php";
+        
     }else{
         include_once "dashboard/room.php";
     }

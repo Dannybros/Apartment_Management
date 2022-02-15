@@ -42,6 +42,12 @@
                     Setting
                 </a>
             </li>
+            <li>
+                <a href="index.php?report" class="menu__list <?php if (isset($_GET['report'])) echo 'active_list'?>">
+                    <em class="fas fa-report">&nbsp;</em>
+                    Report
+                </a>
+            </li>
             
         </ul>
         <section class="date_display mx-3">
