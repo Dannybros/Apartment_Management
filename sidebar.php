@@ -44,8 +44,8 @@
             </li>
             <li>
                 <a href="index.php?report" class="menu__list <?php if (isset($_GET['report'])) echo 'active_list'?>">
-                    <em class="fas fa-report">&nbsp;</em>
-                    Report
+                    <em class="fas fa-file">&nbsp;</em> 
+                    Report 
                 </a>
             </li>
             
