@@ -16,7 +16,7 @@
 }
 .staff_table li{
     font-size: 20px;
-    background: rgb(218, 218, 218);
+    background: rgb(247, 245, 245);
 }
 .staff_table li:nth-child(even){
     background: rgb(226, 224, 224);

@@ -305,3 +305,59 @@ function delSettingType(dataTable, dataField, RoomTypeID){
         })
     }
 }
+
+//report
+
+function resetMonthly_Input(){
+    var date = document.getElementById('reportMonthly_Input');
+    var search = document.getElementById('bookingSearchBar').value;
+
+    date.value="";
+    loadBookingSearch(date.value, search)
+}
+
+function searchBooking(){
+    var date = document.getElementById('reportMonthly_Input').value;
+    var search = document.getElementById('bookingSearchBar').value;
+    loadBookingSearch(date, search)
+}
+
+function loadBookingSearch(date, search){
+    var booking_display = document.getElementById('bookingList');
+    var total_revenue = document.getElementById('booking_total_revenue');
+    var sum =0;
+
+    $.ajax({
+        url:`includes/reportDB/dbReport.php`,
+        type:"POST",
+        data:{
+            date:date,
+            search:search,
+        },
+        dataType:"JSON",
+        success: function(res){
+            booking_display.innerHTML="";
+            total_revenue.textContent = "0 $"
+            
+            for(var i =0; i<res.length; i++){
+                
+                sum +=parseInt(res[i].total);
+                total_revenue.textContent = `${sum} $`;
+
+                var display =`
+                    <li class="d-flex">
+                        <span class="col-1 staff_list"> ${res[i].id} </span>
+                        <span class="col-2 staff_list"> ${res[i].c_name} </span>
+                        <span class="col-2 staff_list"> ${res[i].r_name} </span>
+                        <span class="col-1 staff_list"> ${res[i].price} $ </span>
+                        <span class="col-2 staff_list"> ${res[i].check_in} </span>
+                        <span class="col-2 staff_list"> ${res[i].check_out} </span>
+                        <span class="col-1 staff_list"> ${res[i].duration} </span>
+                        <span class="col-1 staff_list"> ${res[i].total} $</span>
+                    </li>
+                `
+                booking_display.innerHTML+=display;
+            }
+        }
+    })
+}
