@@ -132,3 +132,13 @@
     text-align: left;
     line-height: 30px;
 }
+
+
+/* report test */
+.ui-sortable-handle{
+    padding: 20px;
+    background-color: #eaecec;
+    border: 1px dotted #ccc;
+    cursor: move;
+    margin-top: 12px;
+}

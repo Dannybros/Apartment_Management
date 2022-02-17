@@ -8,7 +8,7 @@ session_start();
     $search = $_POST['search'];
 
     if($date==""){
-        $query = "SELECT * FROM `booking` NATURAL JOIN rooms NATURAL JOIN customer NATURAL JOIN room_type WHERE `Room_Name` LIKE '%$search%' OR `Customer_Name` LIKE '%$search%' ORDER BY Room_Name;";
+        $query = "SELECT * FROM `booking` NATURAL JOIN rooms NATURAL JOIN customer NATURAL JOIN room_type WHERE `Room_Name` LIKE '%$search%' OR `Customer_Name` LIKE '%$search%' ORDER BY Display_Order;";
     }else{
         $month = (int)explode("-", $date)[1];
         $total_month = (int)explode("-", $date)[0] * 12 + $month;
@@ -17,7 +17,7 @@ session_start();
                 FROM `booking` NATURAL JOIN rooms NATURAL JOIN customer NATURAL JOIN room_type
                 WHERE ($total_month BETWEEN CAST(SUBSTRING(`Check_In`, 1, 4) AS INT) * 12 + CAST(SUBSTRING(`Check_In`, 6, 2) AS INT) 
                     AND CAST(SUBSTRING(`Check_Out`, 1, 4) AS INT) * 12 + CAST(SUBSTRING(`Check_Out`, 6, 2) AS INT)) 
-                AND (`Room_Name` LIKE '%$search%' OR `Customer_Name` LIKE '%$search%')";
+                AND (`Room_Name` LIKE '%$search%' OR `Customer_Name` LIKE '%$search%') ORDER BY Display_Order";
     }
 
     $result = mysqli_query($conn, $query);

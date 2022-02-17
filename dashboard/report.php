@@ -37,11 +37,10 @@
                     <span class="col-1 staff_list"> <b> Duration </b> </span>
                     <span class="col-1 staff_list"> <b> Total </b> </span>
                 </li>
-                <div id="bookingList">
-
+                <div id="bookingList" class="mb-3">
                     <?php
 
-                        $sql ="SELECT * FROM `booking` NATURAL JOIN rooms NATURAL JOIN customer NATURAL JOIN room_type";
+                        $sql ="SELECT * FROM `booking` NATURAL JOIN rooms NATURAL JOIN customer NATURAL JOIN room_type ORDER BY Display_Order";
                         $result = mysqli_query($conn, $sql);
 
                         while($booking = mysqli_fetch_array($result)){
@@ -54,7 +53,7 @@
                             $duration = $booking['Duration'];
                             $total = $booking['Total']; ?> 
 
-                            <li class="d-flex">
+                            <li class="d-flex" id="<?php echo $id?>" style="margin:0; padding:0 !important">
                                 <span class="col-1 staff_list"> <?php echo $id?> </span>
                                 <span class="col-2 staff_list"> <?php echo $c_name?> </span>
                                 <span class="col-2 staff_list"> <?php echo $r_name?> </span>
@@ -65,8 +64,8 @@
                                 <span class="col-1 staff_list"> <?php echo $total?> </span>
                             </li>
                         <?php }
-                    ?>
 
+                    ?>
                 </div>
             </ul>
         </div>
