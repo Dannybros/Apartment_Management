@@ -31,12 +31,16 @@
                         <label><b> Room Type</b></label>
                         <select class="form-control" id="ReserverRoomType" name="roomType"  onchange="fetchFreeRoom(this.value)" data-error="Select Room Type" required>
                             <option selected disabled> Select the Room Type</option>
-                            <option value="1"> Single Rooms</option>
-                            <option value="2"> Double Rooms</option>
-                            <option value="3"> Triple Rooms</option>
-                            <option value="4"> Family Rooms</option>
-                            <option value="5"> King-Sized Rooms</option>
-                            <option value="6"> Master-Suite Rooms</option>
+                            <?php
+                                $sql ="SELECT * FROM `room_type`";
+                                $result = mysqli_query($conn, $sql);
+                                while($roomType = mysqli_fetch_array($result)){?>
+                                    <option 
+                                        value=<?php echo $roomType['Room_Type_Id']?> 
+                                    >
+                                        <?php echo $roomType['Room_Type_Name']?>
+                                    </option>
+                            <?php }?>
                         </select>
                     </article>
                     <article class="col-lg-6 form-group">

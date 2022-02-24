@@ -8,12 +8,16 @@
         <div class="d-flex justify-content-between align-items-center room_search_bar">
             <select name="floor" id="TypeSelector" class="floorSelector" onchange="showRooms(this.value)">
                 <option value="all" selected="select">All</option>
-                <option value="1" >Single Rooms</option>
-                <option value="2">Double Rooms</option>
-                <option value="3">Triple Rooms</option>
-                <option value="4">Family Rooms</option>
-                <option value="5">King-Sized Rooms</option>
-                <option value="6">Master-Suite Rooms</option>
+                <?php
+                    $sql ="SELECT * FROM `room_type`";
+                    $result = mysqli_query($conn, $sql);
+                    while($roomType = mysqli_fetch_array($result)){?>
+                        <option 
+                            value=<?php echo $roomType['Room_Type_Id']?> 
+                        >
+                            <?php echo $roomType['Room_Type_Name']?>
+                        </option>
+                <?php }?>
             </select>
             <div class="input-group" style="width: 200px !important;">
                 <div class="input-group-prepend" >
@@ -126,12 +130,16 @@
                             required
                             >
                                 <option selected disabled> </option>
-                                <option value="1">Single Rooms</option>
-                                <option value="2">Double Rooms</option>
-                                <option value="3">Triple Rooms</option>
-                                <option value="4">Family Rooms</option>
-                                <option value="5">King-Sized Rooms</option>
-                                <option value="6">Master-Suite Rooms</option>
+                                <?php
+                                    $sql ="SELECT * FROM `room_type`";
+                                    $result = mysqli_query($conn, $sql);
+                                    while($roomType = mysqli_fetch_array($result)){?>
+                                        <option 
+                                            value=<?php echo $roomType['Room_Type_Id']?> 
+                                        >
+                                            <?php echo $roomType['Room_Type_Name']?>
+                                        </option>
+                                <?php }?>
                             </select>
                         </div>
                         <div class="col-6">
@@ -245,12 +253,12 @@
                                      style="cursor:pointer; color:black" 
                                      onchange="getRoomTypePrice(this.value, <?php echo $roomModals['Room_Id']?>)"
                                     > 
-                                        <option value="1" <?php if($roomModals['Room_Type_Id']=="1") echo 'selected="selected" '?> >Single Rooms</option>
-                                        <option value="2" <?php if($roomModals['Room_Type_Id']=="2") echo 'selected="selected" '?> >Double Rooms</option>
-                                        <option value="3" <?php if($roomModals['Room_Type_Id']=="3") echo 'selected="selected" '?> >Triple Rooms</option>
-                                        <option value="4" <?php if($roomModals['Room_Type_Id']=="4") echo 'selected="selected" '?> >Family Rooms</option>
-                                        <option value="5" <?php if($roomModals['Room_Type_Id']=="5") echo 'selected="selected" '?> >King-Sized Rooms</option>
-                                        <option value="6" <?php if($roomModals['Room_Type_Id']=="6") echo 'selected="selected" '?> >Master-Suite Rooms</option>
+                                    <option 
+                                        value=<?php echo $roomType['Room_Type_Id']?> 
+                                        <?php if($roomModals['Room_Type_Id']==$roomType['Room_Type_Id']) echo 'selected="selected" '?>
+                                    >
+                                        <?php echo $roomType['Room_Type_Name']?>
+                                    </option>
                                     </select>
                                 </div>
                                 <div class="col-6">
