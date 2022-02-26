@@ -57,7 +57,7 @@
             <input type="password" class="col-md-12 p-2" name="password" placeholder="Password...">
             <input type="password" class="col-md-12 p-2" name="conPassword" placeholder="Confirm Password...">
             <button type="submit" class="p-2 col-md-12 submit_button" id="submit" name="submit">Register</button>
-            <a href="login.php">Got to Log In Page</a>
+            <a href="login.php">Go to Log In Page</a>
         </div>
     </form>
 </div>

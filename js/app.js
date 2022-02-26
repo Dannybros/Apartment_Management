@@ -104,7 +104,7 @@ function getMonthBetween(d1, d2){
     var year = (d2.split('-')[0] - d1.split('-')[0]) * 12;
     var month = d2.split('-')[1] - d1.split('-')[1];
 
-    return (year+month+1);
+    return (year+month);
 }
 
 function getNextMonth(d){
@@ -151,43 +151,55 @@ function cleanRoom(roomId, price, d1, d2){
     });
 
     const currentDate = `${d.getFullYear()}-${dateMonth}`;
-    const dateDiff = getMonthBetween(currentDate, d2);
 
-    const confirmCheckout= confirm(`You still have ${dateDiff} months left to stay. Do you will wish to check out?`);
-
-    if(confirmCheckout){
-        let dataOption={};
-        if(dateDiff>0){
-            const duration = getMonthBetween(d1, currentDate);
-            const total = price * duration;
-            dataOption={
-                id:roomId,
-                d2:currentDate,
-                duration:duration,
-                total:total,
-                checkout:'earlier'
-            };
-        }else{
+    if(getMonthBetween(currentDate, d1)>0){
+        const confirmCheckout= confirm(`Are you willing to cancel the booking?`);
+        if(confirmCheckout){
             dataOption = {
-                id:id,
-                checkout:'onTime'
+                id:roomId,
+                checkout:'cancel'
             }
         }
 
-        $.ajax({
-            url:`includes/roomDB/dbCheckout.php`,
-            type:"GET",
-            data:dataOption,
-            success: function(res){
-                if(res==='failed'){
-                    alert("SQL failed. Please try again")
-                }
-                if(res==='success'){
-                    window.location.replace('index.php?room&success=checkout')
-                }
+    }else{
+        const dateDiff = getMonthBetween(currentDate, d2);
+        
+        let dataOption={};
+    
+        if(dateDiff>=0){
+            dataOption = {
+                id:roomId,
+                checkout:'onTime'
             }
-        })
+        }else{
+            const confirmCheckout= confirm(`You still have ${dateDiff} months left to stay. Do you will wish to check out?`);
+            if(confirmCheckout){
+                const duration = getMonthBetween(d1, currentDate);
+                const total = price * duration;
+                dataOption={
+                    id:roomId,
+                    d2:currentDate,
+                    duration:duration,
+                    total:total,
+                    checkout:'earlier'
+                };
+            }
+        }
     }
+
+    $.ajax({
+        url:`includes/roomDB/dbCheckout.php`,
+        type:"GET",
+        data:dataOption,
+        success: function(res){
+            if(res==='failed'){
+                alert("SQL failed. Please try again")
+            }
+            if(res==='success'){
+                window.location.replace('index.php?room&success=checkout')
+            }
+        }
+    })
 
 }
 
